@@ -1,4 +1,4 @@
-package com.ltizzi.springsecsection2.config;
+package com.ltizzi.EasyBankBackend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
