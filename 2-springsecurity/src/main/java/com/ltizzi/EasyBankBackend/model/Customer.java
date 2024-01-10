@@ -1,9 +1,8 @@
 package com.ltizzi.EasyBankBackend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -11,6 +10,8 @@ import java.sql.Timestamp;
 
 
 @Entity
+@Getter
+@Setter
 @Table(name="customer")
 public class Customer {
 
@@ -21,39 +22,16 @@ public class Customer {
 
     private String name;
     private String email;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String pwd;
 
-    private String mobile_number;
+    @Column(name="mobile_number")
+    private String mobileNumber;
     private String role;
 
     @CreationTimestamp
     private Timestamp createdAt;
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
 
     public Long getCustomer_id() {
         return customer_id;
@@ -71,12 +49,36 @@ public class Customer {
         this.name = name;
     }
 
-    public String getMobile_number() {
-        return mobile_number;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMobile_number(String mobile_number) {
-        this.mobile_number = mobile_number;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Timestamp getCreatedAt() {
