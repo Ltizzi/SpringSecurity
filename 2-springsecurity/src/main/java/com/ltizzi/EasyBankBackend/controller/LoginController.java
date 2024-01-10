@@ -28,7 +28,7 @@ public class LoginController {
             String hasPwd = passwordEncoder.encode(customer.getPwd());
             customer.setPwd(hasPwd);
             savedCustomer = customerRepo.save(customer);
-            if(savedCustomer.getId() > 0) {
+            if(savedCustomer.getCustomer_id() > 0) {
                 response = ResponseEntity
                         .status(HttpStatus.CREATED)
                         .body("Given user details are successfully registered");
