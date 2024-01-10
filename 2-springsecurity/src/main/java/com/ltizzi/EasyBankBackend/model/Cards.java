@@ -35,8 +35,8 @@ public class Cards {
     @Column(name="amount_used")
     private int amountUsed;
 
-    @Column(name="avaible_amount")
-    private int avaibleAmount;
+    @Column(name="available_amount")
+    private int availableAmount;
 
     @Column(name="create_dt")
     private Date createDt;
