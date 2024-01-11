@@ -1,7 +1,9 @@
 package com.ltizzi.EasyBankBackend.config;
 
+import com.ltizzi.EasyBankBackend.model.Authority;
 import com.ltizzi.EasyBankBackend.model.Customer;
 import com.ltizzi.EasyBankBackend.repository.CustomerRepository;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class EasyBankUsernamePwdAuthenticationProvider implements AuthenticationProvider {
@@ -32,9 +35,10 @@ public class EasyBankUsernamePwdAuthenticationProvider implements Authentication
         List<Customer> customer = customerRepo.findByEmail(username);
         if(!customer.isEmpty()){
             if(passwordEncoder.matches(pwd, customer.get(0).getPwd())){
-                List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(customer.get(0).getRole()));
-                return new UsernamePasswordAuthenticationToken(username, pwd, authorities);
+               // List<GrantedAuthority> authorities = new ArrayList<>();
+              //  authorities.add(new SimpleGrantedAuthority(customer.get(0).getRole()));
+                return new UsernamePasswordAuthenticationToken(
+                        username, pwd, getGrantedAuthorities(customer.get(0).getAuthorities()));
             } else {
                 throw new BadCredentialsException("Invalid password!");
             }
@@ -42,6 +46,14 @@ public class EasyBankUsernamePwdAuthenticationProvider implements Authentication
             throw new BadCredentialsException("No user registered with these details!");
         }
 
+    }
+
+    private List<GrantedAuthority> getGrantedAuthorities(Set<Authority> authorities){
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for(Authority authority: authorities){
+            grantedAuthorities.add(new SimpleGrantedAuthority(authority.getName()));
+        }
+        return grantedAuthorities;
     }
 
     @Override

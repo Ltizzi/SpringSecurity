@@ -48,8 +48,21 @@ public class ProjectSecurityConfig {
                                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests((requests) -> requests
-                                    .requestMatchers("/myAccount",
-                                            "/myBalance", "myLoans", "/myCards", "/user").authenticated()
+                        //primera version sin authZ
+                        //    .requestMatchers("/myAccount","/myBalance", "myLoans", "/myCards", "/user").authenticated()
+
+                        //segunda versión con authZ usando authorities
+                            /*        .requestMatchers("/myAccount").hasAuthority("VIEWACCOUNT")
+                                    .requestMatchers("/myBalance").hasAnyAuthority("VIEWACCOUNT", "VIEWBALANCE")
+                                    .requestMatchers("/myLoans").hasAuthority("VIEWLOANS")
+                                    .requestMatchers("/myCards").hasAuthority("VIEWCARDS")*/
+
+                        //3RA VERSION CON ROLES
+                                    .requestMatchers("/myAccount").hasRole("USER")
+                                    .requestMatchers("/myBalance").hasAnyRole("USER", "ADMIN")
+                                    .requestMatchers("/myLoans").hasRole("USER")
+                                    .requestMatchers("/myCards").hasRole("USER")
+                                    .requestMatchers("/user").authenticated()
                                     .requestMatchers("/notices", "/contact", "/register")
                                         .permitAll())
                                 .formLogin(Customizer.withDefaults())
