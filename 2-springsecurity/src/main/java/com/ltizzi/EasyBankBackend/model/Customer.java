@@ -3,7 +3,6 @@ package com.ltizzi.EasyBankBackend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -12,8 +11,6 @@ import java.util.Set;
 
 
 @Entity
-@Getter
-@Setter
 @Table(name="customer")
 public class Customer {
 

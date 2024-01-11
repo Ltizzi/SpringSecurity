@@ -1,15 +1,11 @@
 package com.ltizzi.EasyBankBackend.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.sql.Date;
 
 @Entity
-@Getter
-@Setter
 @Table(name="loans")
 public class Loans {
 
@@ -41,4 +37,67 @@ public class Loans {
     private String createDt;
 
 
+    public int getLoanNumber() {
+        return loanNumber;
+    }
+
+    public void setLoanNumber(int loanNumber) {
+        this.loanNumber = loanNumber;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public Date getStartDt() {
+        return startDt;
+    }
+
+    public void setStartDt(Date startDt) {
+        this.startDt = startDt;
+    }
+
+    public String getLoanType() {
+        return loanType;
+    }
+
+    public void setLoanType(String loanType) {
+        this.loanType = loanType;
+    }
+
+    public int getTotalLoan() {
+        return totalLoan;
+    }
+
+    public void setTotalLoan(int totalLoan) {
+        this.totalLoan = totalLoan;
+    }
+
+    public int getAmountPaid() {
+        return amountPaid;
+    }
+
+    public void setAmountPaid(int amountPaid) {
+        this.amountPaid = amountPaid;
+    }
+
+    public int getOutstandingAmount() {
+        return outstandingAmount;
+    }
+
+    public void setOutstandingAmount(int outstandingAmount) {
+        this.outstandingAmount = outstandingAmount;
+    }
+
+    public String getCreateDt() {
+        return createDt;
+    }
+
+    public void setCreateDt(String createDt) {
+        this.createDt = createDt;
+    }
 }

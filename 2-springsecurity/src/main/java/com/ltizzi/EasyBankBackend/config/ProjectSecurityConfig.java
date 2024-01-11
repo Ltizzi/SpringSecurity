@@ -1,6 +1,9 @@
 package com.ltizzi.EasyBankBackend.config;
 
+import com.ltizzi.EasyBankBackend.filter.AuthoritiesLoggingAfterFilter;
+import com.ltizzi.EasyBankBackend.filter.AuthoritiesLoggingAtFilter;
 import com.ltizzi.EasyBankBackend.filter.CsrfCookieFilter;
+import com.ltizzi.EasyBankBackend.filter.RequestValidationBeforeFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,15 +50,19 @@ public class ProjectSecurityConfig {
                                 .ignoringRequestMatchers("/contact", "/register")
                                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+                .addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests((requests) -> requests
+
                         //primera version sin authZ
                         //    .requestMatchers("/myAccount","/myBalance", "myLoans", "/myCards", "/user").authenticated()
 
                         //segunda versión con authZ usando authorities
-                            /*        .requestMatchers("/myAccount").hasAuthority("VIEWACCOUNT")
-                                    .requestMatchers("/myBalance").hasAnyAuthority("VIEWACCOUNT", "VIEWBALANCE")
-                                    .requestMatchers("/myLoans").hasAuthority("VIEWLOANS")
-                                    .requestMatchers("/myCards").hasAuthority("VIEWCARDS")*/
+                        /*        .requestMatchers("/myAccount").hasAuthority("VIEWACCOUNT")
+                                .requestMatchers("/myBalance").hasAnyAuthority("VIEWACCOUNT", "VIEWBALANCE")
+                                .requestMatchers("/myLoans").hasAuthority("VIEWLOANS")
+                                .requestMatchers("/myCards").hasAuthority("VIEWCARDS")*/
 
                         //3RA VERSION CON ROLES
                                     .requestMatchers("/myAccount").hasRole("USER")
