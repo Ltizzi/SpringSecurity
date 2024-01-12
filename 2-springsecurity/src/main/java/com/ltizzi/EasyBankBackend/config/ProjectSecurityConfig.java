@@ -79,6 +79,7 @@ public class ProjectSecurityConfig {
         return http.build();
     }
 
+    
     //previo al custom user details (en la carpeta config también)
    /* @Bean
     public UserDetailsService userDetailsService(DataSource dataSource){
