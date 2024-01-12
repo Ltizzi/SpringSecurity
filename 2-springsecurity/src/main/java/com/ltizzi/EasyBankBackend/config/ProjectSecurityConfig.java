@@ -69,7 +69,8 @@ public class ProjectSecurityConfig {
                         //3RA VERSION CON ROLES
                                     .requestMatchers("/myAccount").hasRole("USER")
                                     .requestMatchers("/myBalance").hasAnyRole("USER", "ADMIN")
-                                    .requestMatchers("/myLoans").hasRole("USER")
+                                    //.requestMatchers("/myLoans").hasRole("USER") //antes del ejemplo de method lvl security
+                                    .requestMatchers("/myLoans").authenticated()
                                     .requestMatchers("/myCards").hasRole("USER")
                                     .requestMatchers("/user").authenticated()
                                     .requestMatchers("/notices", "/contact", "/register")
