@@ -1,9 +1,6 @@
 package com.ltizzi.EasyBankBackend.config;
 
-import com.ltizzi.EasyBankBackend.filter.AuthoritiesLoggingAfterFilter;
-import com.ltizzi.EasyBankBackend.filter.AuthoritiesLoggingAtFilter;
-import com.ltizzi.EasyBankBackend.filter.CsrfCookieFilter;
-import com.ltizzi.EasyBankBackend.filter.RequestValidationBeforeFilter;
+import com.ltizzi.EasyBankBackend.filter.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,7 +41,7 @@ public class ProjectSecurityConfig {
                         config.setAllowedMethods(Collections.singletonList("*"));
                         config.setAllowCredentials(true);
                         config.setAllowedHeaders(Collections.singletonList("*"));
-                        config.setExposedHeaders(Arrays.asList("Authorization"));
+                        config.setExposedHeaders(Arrays.asList("Authorization")); //necesario para jwt
                         config.setMaxAge(3600L);
                         return config;
                     }
@@ -56,6 +53,8 @@ public class ProjectSecurityConfig {
                 .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
                 .addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new JWTGenerationFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new JWTValidatorFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests((requests) -> requests
 
                         //primera version sin authZ
